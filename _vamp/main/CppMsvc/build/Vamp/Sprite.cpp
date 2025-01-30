@@ -6,6 +6,16 @@ Sprite::Sprite()
     cout << "new sprite" << endl;
 }
 
+int Sprite::GetFullWidth()
+{
+    return width * scaleX;
+}
+
+int Sprite::GetFullHeight()
+{
+    return height * scaleY;
+}
+
 void Sprite::Play(string animName, bool restart)
 {
     if(animator != nullptr)

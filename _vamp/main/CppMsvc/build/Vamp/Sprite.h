@@ -14,11 +14,13 @@ class Sprite
     public:
         int x = 0;
         int y = 0;
+        int width = 1;
+        int height = 1;
         float scaleX = 1.0;
         float scaleY = 1.0;
         Sprite();
-        int GetWidth();
-        int GetHeight();
+        int GetFullWidth();
+        int GetFullHeight();
         SpriteSheet* spritesheet = nullptr;
         Animator* animator = nullptr;
         void Play(string animName, bool restart = false);
@@ -33,8 +35,7 @@ class Sprite
         void Paint();
         
     private:
-        int width = 1;
-        int height = 1;
+
 };
 
 #endif

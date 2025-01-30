@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
     tilemap->FillRect(32, 6, 10, 6, 5);
     tilemap->SetTile(34, 5, 5);
     
-    collider = new Collider(30, 40);
+    collider = new Collider(10, 10);
     
     engine->Run();
     
@@ -110,6 +110,7 @@ int x = 0;
 int y = 0;
 int state = 0;
 int counter = 0;
+Tile tile;
 
 void OnUpdate(float deltaTime)
 {
@@ -124,7 +125,7 @@ void OnUpdate(float deltaTime)
         
     bool pressed = false;
         
-    int speed = 130 * deltaTime;
+    int speed = 80 * deltaTime;
         
     if(Keyboard::IsDown(Key::W))
     {
@@ -189,12 +190,14 @@ void OnUpdate(float deltaTime)
     
     tilemap->Update();
     sprite->Update();
-    collider->x = sprite->x;
-    collider->y = sprite->y;
+    collider->x = sprite->x - 6;
+    collider->y = sprite->y + 9;
     
-    cout << "tileID: " << tilemap->GetTileIdAt(sprite->x, sprite->y) << endl;
+    //cout << "tileID: " << tilemap->GetTileIdAt(sprite->x, sprite->y) << endl;
     
+    tile = tilemap->GetTileAt(sprite->x, sprite->y);
     
+    cout << "id: " << tile.id << ", x: " << tile.x << ", y: " << tile.y << endl;
     
     //auto now = high_resolution_clock::now();
     //long long time = duration_cast<nanoseconds>(now.time_since_epoch()).count();
@@ -217,6 +220,8 @@ void OnPaint()
     spritesheet->Paint(counter, 1, 0, 100, 70);
 
     GFX::DrawRect(0x0000FFFF, 50, 50, 25, 40);
+
+    GFX::DrawRect(0x00FFFFFF, tile.x, tile.y, tile.width, tile.height);
 
     sprite->Paint();
     

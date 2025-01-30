@@ -9,17 +9,19 @@
 
 using namespace std;
 
+struct Tile 
+{
+    int id;
+    int x;
+    int y;
+    int width;
+    int height;
+};
+        
 class Tilemap
 {
     public:
-        struct Tile 
-        {
-            int id;
-            int x;
-            int y;
-            int width;
-            int height;
-        };
+        
     
         vector<vector<int>> map;
         SpriteSheet* spritesheet;
@@ -36,6 +38,7 @@ class Tilemap
         void FillRect(int tileId, int x, int y, int width, int height);
         void SetTile(int tileId, int x, int y);
         int GetTileIdAt(int posX, int posY);
+        Tile GetTileAt(int posX, int posY);
         void Update();
         void Paint();
         
