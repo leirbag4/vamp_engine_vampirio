@@ -33,6 +33,24 @@ void Tilemap::SetTile(int tileId, int x, int y)
         map[y][x] = tileId;
 }
 
+int Tilemap::GetTileIdAt(int posX, int posY)
+{
+    // Ajustar las coordenadas restando los offsets
+    int adjustedX = posX - offsetX + localX;
+    int adjustedY = posY - offsetY + localY;
+
+    // Convertir coordenadas de píxeles a índices de la matriz
+    int tileX = adjustedX / tileSize;
+    int tileY = adjustedY / tileSize;
+
+    // Verificar límites
+    if (tileX >= 0 && tileX < width && tileY >= 0 && tileY < height) {
+        return map[tileY][tileX]; // Devolver el ID del tile en esa posición
+    }
+
+    return -1; // Devuelve -1 si está fuera de los límites
+}
+
 void Tilemap::Update()
 {
     if(localX < 0)
@@ -56,7 +74,7 @@ void Tilemap::Paint()
     //    col--;
     
     cout << "localY: " << localY << " col: " << col << endl;
-    GFX::FillRect(0xFF00FFFF, 150, 150, tileSize * viewportWidth, tileSize * viewportHeight);
+    GFX::FillRect(0xFF00FFFF, offsetX, offsetY, tileSize * viewportWidth, tileSize * viewportHeight);
     
     for(int cy = col; cy < (viewportHeight + col + 1); cy++)
     {
@@ -69,7 +87,7 @@ void Tilemap::Paint()
             
             
             
-            spritesheet->Paint(tileId, tilePosX + 150, tilePosY + 150, tileSize, tileSize);
+            spritesheet->Paint(tileId, tilePosX + offsetX, tilePosY + offsetY, tileSize, tileSize);
             
         }   
     }

@@ -18,6 +18,8 @@ class GFX
         static void Init(SDL_Renderer* renderer);
         static void SetColor(unsigned int color);
         static void FillRect(unsigned int color, int x, int y, int width, int height);
+        static void DrawRect(unsigned int color, int x, int y, int width, int height);
+        static void DrawRect(unsigned int color, int x, int y, int width, int height, int size);
         static void DrawTexture(Texture* texture, int x, int y);
         static void DrawTexture(Texture* texture, int x, int y, int width, int height);
         static void DrawTexture(Texture* texture, int x, int y, int width, int height, int clipX, int clipY, int clipWidth, int clipHeight);

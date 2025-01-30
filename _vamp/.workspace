@@ -1,1 +1,1 @@
-{"MainFile":"main.cpp","Language":"CPP","DocumentTypes":["CPP","H"],"DefaultBuilderType":"CustomGnuGppWSLCpp","WorkspaceProjects":[{"BuilderType":"CustomGnuGppWSLCpp","BuilderKind":"CppGnuGpp"}]}
+{"MainFile":"main.cpp","Language":"CPP","DocumentTypes":["CPP","H"],"DefaultBuilderType":"CustomGnuGppWSLCpp","WorkspaceProjects":[{"BuilderType":"CustomClangCpp","BuilderKind":"CppCLang"}]}

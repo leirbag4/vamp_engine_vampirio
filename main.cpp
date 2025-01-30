@@ -15,6 +15,7 @@
 #include "Vamp/Sprite.h"
 #include "Vamp/Animator.h"
 #include "Vamp/Tilemap.h"
+#include "Vamp/Collider.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -34,7 +35,7 @@ Animation* animUp;
 Animator* animator;
 Sprite* sprite;
 Tilemap* tilemap;
-
+Collider* collider;
 
 int main(int argc, char* argv[])
 {
@@ -95,6 +96,9 @@ int main(int argc, char* argv[])
     tilemap = new Tilemap("res/tileset.png", 24, 200, 200, 10, 10);
     tilemap->FillRect(16, 4, 4, 8, 8);
     tilemap->FillRect(32, 6, 10, 6, 5);
+    tilemap->SetTile(34, 5, 5);
+    
+    collider = new Collider(30, 40);
     
     engine->Run();
     
@@ -185,6 +189,11 @@ void OnUpdate(float deltaTime)
     
     tilemap->Update();
     sprite->Update();
+    collider->x = sprite->x;
+    collider->y = sprite->y;
+    
+    cout << "tileID: " << tilemap->GetTileIdAt(sprite->x, sprite->y) << endl;
+    
     
     
     //auto now = high_resolution_clock::now();
@@ -207,6 +216,10 @@ void OnPaint()
     //cout << counter << endl;
     spritesheet->Paint(counter, 1, 0, 100, 70);
 
+    GFX::DrawRect(0x0000FFFF, 50, 50, 25, 40);
+
     sprite->Paint();
+    
+    collider->Paint();
 
 }

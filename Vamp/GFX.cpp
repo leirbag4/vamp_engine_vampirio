@@ -23,6 +23,25 @@ void GFX::FillRect(unsigned int color, int x, int y, int width, int height)
     SDL_RenderFillRect(renderer, &rect);
 }
 
+void GFX::DrawRect(unsigned int color, int x, int y, int width, int height)
+{
+    GFX::SetColor(color);
+    SDL_Rect rect;
+    rect.x = x; rect.y = y;
+    rect.w = width; rect.h = height;
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
+void GFX::DrawRect(unsigned int color, int x, int y, int width, int height, int size)
+{
+    GFX::SetColor(color);
+
+    GFX::FillRect(color, x, y, width, size);                    // Up
+    GFX::FillRect(color, x, y + height - size, width, size);    // Down
+    GFX::FillRect(color, x, y, size, height);                   // Left
+    GFX::FillRect(color, x + width - size, y, size, height);    // Right
+}
+
 // static
 void GFX::DrawTexture(Texture* texture, int x, int y)
 {
