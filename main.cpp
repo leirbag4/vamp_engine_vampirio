@@ -35,7 +35,10 @@ Animation* animUp;
 Animator* animator;
 Sprite* sprite;
 Tilemap* tilemap;
-Collider* collider;
+Collider* colliderLeft;
+Collider* colliderRight;
+Collider* colliderUp;
+Collider* colliderDown;
 
 int main(int argc, char* argv[])
 {
@@ -94,11 +97,16 @@ int main(int argc, char* argv[])
     sprite->SetAnimator(animator);
     
     tilemap = new Tilemap("res/tileset.png", 24, 200, 200, 10, 10);
+    tilemap->FillRect(17, 0, 0, 200, 200);
     tilemap->FillRect(16, 4, 4, 8, 8);
     tilemap->FillRect(32, 6, 10, 6, 5);
+    tilemap->FillRect(34, 8, 9, 5, 2);
     tilemap->SetTile(34, 5, 5);
     
-    collider = new Collider(10, 10);
+    colliderLeft =  new Collider(10, 10);
+    colliderRight = new Collider(10, 10);
+    colliderUp =    new Collider(10, 10);
+    colliderDown =  new Collider(10, 10);
     
     engine->Run();
     
@@ -111,6 +119,10 @@ int y = 0;
 int state = 0;
 int counter = 0;
 Tile tile;
+bool allowLeft = true;
+bool allowRight = true;
+bool allowUp = true;
+bool allowDown = true;
 
 void OnUpdate(float deltaTime)
 {
@@ -127,28 +139,28 @@ void OnUpdate(float deltaTime)
         
     int speed = 80 * deltaTime;
         
-    if(Keyboard::IsDown(Key::W))
+    if(Keyboard::IsDown(Key::W) && allowUp)
     {
         sprite->y -= speed;
         sprite->Play("walk_up");
         tilemap->localY--;
         pressed = true;
     }
-    else if(Keyboard::IsDown(Key::S))
+    else if(Keyboard::IsDown(Key::S) && allowDown)
     {
         sprite->y += speed;
         sprite->Play("walk_down");
         tilemap->localY++;
         pressed = true;
     }
-    if(Keyboard::IsDown(Key::A))
+    if(Keyboard::IsDown(Key::A) && allowLeft)
     {
         sprite->x -= speed;
         sprite->Play("walk_left");
         tilemap->localX--;
         pressed = true;
     }
-    else if(Keyboard::IsDown(Key::D))
+    else if(Keyboard::IsDown(Key::D) && allowRight)
     {
         sprite->x += speed;
         sprite->Play("walk_right");
@@ -190,12 +202,34 @@ void OnUpdate(float deltaTime)
     
     tilemap->Update();
     sprite->Update();
-    collider->x = sprite->x - 6;
-    collider->y = sprite->y + 9;
+    
+    // Colliders
+    colliderLeft->x = sprite->x - 6;
+    colliderLeft->y = sprite->y + 9;
+    
+    colliderRight->x = sprite->x + 20;
+    colliderRight->y = sprite->y + 9;
+    
+    colliderUp->x = sprite->x + 6;
+    colliderUp->y = sprite->y - 5;
+    
+    colliderDown->x = sprite->x + 6;
+    colliderDown->y = sprite->y + 20;
+    
     
     //cout << "tileID: " << tilemap->GetTileIdAt(sprite->x, sprite->y) << endl;
     
-    tile = tilemap->GetTileAt(sprite->x, sprite->y);
+    tile = tilemap->GetTileAt(colliderLeft->x, colliderLeft->y);
+    
+    int blockTile = 34;
+    
+    allowLeft = !colliderLeft->CollidesTile(tilemap, blockTile);
+    allowRight =!colliderRight->CollidesTile(tilemap, blockTile); 
+    allowUp =   !colliderUp->CollidesTile(tilemap, blockTile);
+    allowDown = !colliderDown->CollidesTile(tilemap, blockTile); 
+    
+    
+    //cout << "col " << collider->CollidesTile(tilemap, 34) << endl;
     
     cout << "id: " << tile.id << ", x: " << tile.x << ", y: " << tile.y << endl;
     
@@ -225,6 +259,9 @@ void OnPaint()
 
     sprite->Paint();
     
-    collider->Paint();
+    colliderLeft->Paint();
+    colliderRight->Paint();
+    colliderUp->Paint();
+    colliderDown->Paint();
 
 }

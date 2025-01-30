@@ -10,7 +10,7 @@ class Collider
 {
     public:
         Collider(int width, int height);
-        //bool CollidesTile
+        bool CollidesTile(Tilemap* tilemap, int tileId);
         int x;
         int y;
         int width;
