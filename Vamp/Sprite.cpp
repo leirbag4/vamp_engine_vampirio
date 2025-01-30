@@ -6,6 +6,12 @@ Sprite::Sprite()
     cout << "new sprite" << endl;
 }
 
+void Sprite::SetPos(int x, int y)
+{
+    this->x = x;
+    this->y = y;
+}
+
 int Sprite::GetFullWidth()
 {
     return width * scaleX;
@@ -40,6 +46,16 @@ void Sprite::Stop()
         animator->Stop();
 }
 
+void Sprite::SetFrame(int frame)
+{
+    currFrame = frame;
+}
+
+int Sprite::GetFrame()
+{
+    return currFrame;
+}
+
 void Sprite::SetAnimator(Animator* animator)
 {
     this->animator = animator;
@@ -65,18 +81,22 @@ SpriteSheet* Sprite::GetSpriteSheet()
 void Sprite::Update()
 {
     if(animator != nullptr)
+    {
         animator->Update();
+        animator->GetAnim()->Update();
+        currFrame = animator->GetAnim()->GetFrame();
+    }
 }
 
 void Sprite::Paint()
 {
     if((animator != nullptr) && (spritesheet != nullptr))
     {
-        animator->GetAnim()->Update();
-        int frame = animator->GetAnim()->GetFrame();
-        
-        //cout << "frame: " << frame << endl;
-        spritesheet->Paint(frame, x, y, width * scaleX, height * scaleY);
+        spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
+    }
+    else if(spritesheet != nullptr)
+    {
+        spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
     }
 }
 

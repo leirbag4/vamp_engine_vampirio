@@ -2,6 +2,7 @@
 #define GFX_H
 
 #include <iostream>
+#include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Texture.h"
@@ -24,7 +25,9 @@ class GFX
         static void DrawTexture(Texture* texture, int x, int y, int width, int height);
         static void DrawTexture(Texture* texture, int x, int y, int width, int height, int clipX, int clipY, int clipWidth, int clipHeight);
         static void DrawTexture(Texture* texture, int x, int y, int clipX, int clipY, int clipWidth, int clipHeight);
-
+        static void FillCircle(unsigned int color, int centerX, int centerY, int radius, int segments = 36);
+        static void DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments);
+        static void DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments, int size);
 };
 
 

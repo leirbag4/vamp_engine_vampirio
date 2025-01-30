@@ -19,6 +19,7 @@ class Sprite
         float scaleX = 1.0;
         float scaleY = 1.0;
         Sprite();
+        void SetPos(int x, int y);
         int GetFullWidth();
         int GetFullHeight();
         SpriteSheet* spritesheet = nullptr;
@@ -27,6 +28,8 @@ class Sprite
         void Pause();
         void Resume();
         void Stop();
+        void SetFrame(int frame);
+        int GetFrame();
         void SetAnimator(Animator* animator);
         Animator* GetAnimator();
         void SetSpriteSheet(SpriteSheet* spritesheet);
@@ -35,7 +38,7 @@ class Sprite
         void Paint();
         
     private:
-
+        int currFrame = 0;
 };
 
 #endif

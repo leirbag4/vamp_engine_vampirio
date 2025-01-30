@@ -34,6 +34,7 @@ Animation* animLeft;
 Animation* animUp;
 Animator* animator;
 Sprite* sprite;
+Sprite* sprite2;
 Tilemap* tilemap;
 Collider* colliderLeft;
 Collider* colliderRight;
@@ -95,6 +96,11 @@ int main(int argc, char* argv[])
     sprite = new Sprite();
     sprite->SetSpriteSheet(spritesheet);
     sprite->SetAnimator(animator);
+    
+    sprite2 = new Sprite();
+    sprite2->SetSpriteSheet(spritesheet);
+    sprite2->SetPos(140, 140);
+    sprite2->SetFrame(3);
     
     tilemap = new Tilemap("res/tileset.png", 24, 200, 200, 10, 10);
     tilemap->FillRect(17, 0, 0, 200, 200);
@@ -202,6 +208,7 @@ void OnUpdate(float deltaTime)
     
     tilemap->Update();
     sprite->Update();
+    sprite2->Update();
     
     // Colliders
     colliderLeft->x = sprite->x - 6;
@@ -223,15 +230,19 @@ void OnUpdate(float deltaTime)
     
     int blockTile = 34;
     
-    allowLeft = !colliderLeft->CollidesTile(tilemap, blockTile);
-    allowRight =!colliderRight->CollidesTile(tilemap, blockTile); 
-    allowUp =   !colliderUp->CollidesTile(tilemap, blockTile);
-    allowDown = !colliderDown->CollidesTile(tilemap, blockTile); 
+    allowLeft = !colliderLeft->Collides(tilemap, blockTile);
+    allowRight =!colliderRight->Collides(tilemap, blockTile); 
+    allowUp =   !colliderUp->Collides(tilemap, blockTile);
+    allowDown = !colliderDown->Collides(tilemap, blockTile); 
     
     
     //cout << "col " << collider->CollidesTile(tilemap, 34) << endl;
     
     cout << "id: " << tile.id << ", x: " << tile.x << ", y: " << tile.y << endl;
+    
+    if(colliderLeft->Collides(sprite2))
+        cout << "collides" << endl;
+    
     
     //auto now = high_resolution_clock::now();
     //long long time = duration_cast<nanoseconds>(now.time_since_epoch()).count();
@@ -253,15 +264,19 @@ void OnPaint()
     //cout << counter << endl;
     spritesheet->Paint(counter, 1, 0, 100, 70);
 
-    GFX::DrawRect(0x0000FFFF, 50, 50, 25, 40);
+    GFX::DrawRect(0x0000FFFF, 10, 50, 50, 25, 40);
 
     GFX::DrawRect(0x00FFFFFF, tile.x, tile.y, tile.width, tile.height);
 
     sprite->Paint();
+    sprite2->Paint();
     
     colliderLeft->Paint();
     colliderRight->Paint();
     colliderUp->Paint();
     colliderDown->Paint();
+
+    //GFX::FillCircle(0xFF00FFFF, 100, 100, 100, 36);
+
 
 }
