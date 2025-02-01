@@ -3,6 +3,17 @@
 SDL_Renderer* GFX::renderer = nullptr;
 
 // static
+void GFX::SetRenderTarget(Texture* texture)
+{
+    SDL_SetRenderTarget(GFX::renderer, texture->tex);
+}
+
+void GFX::ResetRenderTarget()
+{
+    SDL_SetRenderTarget(GFX::renderer, NULL);
+}
+
+// static
 void GFX::SetColor(unsigned int color)
 {	
 	unsigned int red =      (color >> 24)   & 0xFF;

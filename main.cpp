@@ -55,13 +55,13 @@ int main(int argc, char* argv[])
     engine->OnPaint =   OnPaint;
     engine->Init();
     
-    texture = IMG_LoadTexture(GFX::renderer, "res/player_sprite.png");
+    /*texture = IMG_LoadTexture(GFX::renderer, "res/player_sprite.png");
     if (!texture) {
         std::cerr << "Error al cargar la imagen PNG: " << IMG_GetError() << std::endl;
         IMG_Quit();
         SDL_Quit();
         return -1;
-    }
+    }*/
     
     texture2 = new Texture("res/player_sprite.png");
     spritesheet = new SpriteSheet(texture2, 19, 25);
@@ -113,6 +113,7 @@ int main(int argc, char* argv[])
     colliderRight = new Collider(10, 10);
     colliderUp =    new Collider(10, 10);
     colliderDown =  new Collider(10, 10);
+    
     
     engine->Run();
     
@@ -253,9 +254,9 @@ void OnPaint()
 {
     GFX::FillRect(0xFF0000FF, 200, y, 40, 40);
     
-    SDL_Rect srcRect = {0, 0, 64, 64};  
-    SDL_Rect destRect = {100, 100, 64, 64}; // x, y, width, height
-    SDL_RenderCopy(GFX::renderer, texture, &srcRect, &destRect);
+    //SDL_Rect srcRect = {0, 0, 64, 64};  
+    //SDL_Rect destRect = {100, 100, 64, 64}; // x, y, width, height
+    //SDL_RenderCopy(GFX::renderer, texture, &srcRect, &destRect);
 
     tilemap->Paint();
             
@@ -275,7 +276,9 @@ void OnPaint()
     colliderRight->Paint();
     colliderUp->Paint();
     colliderDown->Paint();
-
+    
+    
+    
     //GFX::FillCircle(0xFF00FFFF, 100, 100, 100, 36);
 
 

@@ -14,7 +14,8 @@ class Texture
         int height;
         SDL_Texture* tex;     
         Texture(const char* path);
-        
+        Texture(int width, int height);
+        void Render();
 };
 
 #endif

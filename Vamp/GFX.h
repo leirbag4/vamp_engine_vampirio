@@ -16,7 +16,9 @@ class GFX
 {
     public:
         static SDL_Renderer* renderer;
-        static void Init(SDL_Renderer* renderer);
+        //static void Init(SDL_Renderer* renderer);
+        static void SetRenderTarget(Texture* texture);
+        static void ResetRenderTarget();
         static void SetColor(unsigned int color);
         static void FillRect(unsigned int color, int x, int y, int width, int height);
         static void DrawRect(unsigned int color, int x, int y, int width, int height);
