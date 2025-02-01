@@ -7,6 +7,7 @@
 #include "GFX.h"
 #include "Key.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 using namespace std;
 

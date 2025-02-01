@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Texture.h"
+#include "Font.h"
 
 // Forward declaration to solve circular dependency
 class Texture;
@@ -22,7 +23,7 @@ class GFX
         static void SetColor(unsigned int color);
         static void FillRect(unsigned int color, int x, int y, int width, int height);
         static void DrawRect(unsigned int color, int x, int y, int width, int height);
-        static void DrawRect(unsigned int color, int x, int y, int width, int height, int size);
+        static void DrawRect(unsigned int color, int size, int x, int y, int width, int height);
         static void DrawTexture(Texture* texture, int x, int y);
         static void DrawTexture(Texture* texture, int x, int y, int width, int height);
         static void DrawTexture(Texture* texture, int x, int y, int width, int height, int clipX, int clipY, int clipWidth, int clipHeight);
@@ -30,6 +31,7 @@ class GFX
         static void FillCircle(unsigned int color, int centerX, int centerY, int radius, int segments = 36);
         static void DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments);
         static void DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments, int size);
+        static void DrawString(const char* str, Font* font, unsigned int color, int x, int y);
 };
 
 

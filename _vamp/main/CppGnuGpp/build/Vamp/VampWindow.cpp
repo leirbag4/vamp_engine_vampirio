@@ -70,6 +70,8 @@ void VampWindow::PollEvents()
 
         int mouseX, mouseY;
         bool mouseEventTriggered = false;
+        bool mouseLeft;
+        bool mouseRight;
 
         switch (e.type)
         {
@@ -81,6 +83,31 @@ void VampWindow::PollEvents()
             case SDL_KEYUP:
                 //KeyUp((Key)((int)e.key.keysym.sym));
                 Keyboard::SetKeyUp((Key)((int)e.key.keysym.sym));
+                break;
+                
+            case SDL_MOUSEBUTTONDOWN:
+                SDL_GetMouseState(&mouseX, &mouseY);
+                mouseLeft  |= e.button.button == SDL_BUTTON_LEFT;
+                mouseRight |= e.button.button == SDL_BUTTON_RIGHT;
+                Mouse::SetValues(mouseX, mouseY, mouseLeft, mouseRight);
+                //MouseDown(mouseX, mouseY, mouseLeft, mouseRight);
+                //mouseEventTriggered = true;
+                break;
+
+            case SDL_MOUSEBUTTONUP:
+                SDL_GetMouseState(&mouseX, &mouseY);
+                mouseLeft  &= !(e.button.button == SDL_BUTTON_LEFT);
+                mouseRight &= !(e.button.button == SDL_BUTTON_RIGHT);
+                Mouse::SetValues(mouseX, mouseY, mouseLeft, mouseRight);
+                //MouseUp(mouseX, mouseY, mouseLeft, mouseRight);
+                //mouseEventTriggered = true;
+                break;
+
+            case SDL_MOUSEMOTION:
+                SDL_GetMouseState(&mouseX, &mouseY);
+                Mouse::x = mouseX;
+                Mouse::y = mouseY;
+                //MouseMove(mouseX, mouseY, mouseLeft, mouseRight);
                 break;
         	
             case SDL_QUIT:

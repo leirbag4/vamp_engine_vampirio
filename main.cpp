@@ -7,7 +7,6 @@
 #include "Vamp/Key.h"
 #include "Vamp/Keyboard.h"
 #include "Vamp/GFX.h"
-#include <SDL2/SDL_image.h>
 #include "Vamp/Texture.h"
 #include "Vamp/XTimer.h"
 #include "Vamp/SpriteSheet.h"
@@ -16,6 +15,7 @@
 #include "Vamp/Animator.h"
 #include "Vamp/Tilemap.h"
 #include "Vamp/Collider.h"
+#include "Vamp/Font.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -40,6 +40,10 @@ Collider* colliderLeft;
 Collider* colliderRight;
 Collider* colliderUp;
 Collider* colliderDown;
+SDL_Surface* textSurface;
+SDL_Texture* textTexture;
+TTF_Font* font;
+Font* font2;
 
 int main(int argc, char* argv[])
 {
@@ -113,6 +117,12 @@ int main(int argc, char* argv[])
     colliderRight = new Collider(10, 10);
     colliderUp =    new Collider(10, 10);
     colliderDown =  new Collider(10, 10);
+   
+    
+    
+    font2 = new Font("res/cascadia_code.ttf", 28);
+    
+    
     
     
     engine->Run();
@@ -279,7 +289,13 @@ void OnPaint()
     
     
     
+    
+    
+    
     //GFX::FillCircle(0xFF00FFFF, 100, 100, 100, 36);
+
+
+    GFX::DrawString("something", font2, 0xFF0000FF, 60, 100);
 
 
 }

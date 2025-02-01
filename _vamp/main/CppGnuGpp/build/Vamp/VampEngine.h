@@ -13,7 +13,7 @@ using namespace std;
 class VampEngine
 {
     public:
-        std::function<void()> OnUpdate;
+        std::function<void(float deltaTime)> OnUpdate;
         std::function<void()> OnPaint;
         void Init();
         void Stop();

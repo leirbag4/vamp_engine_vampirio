@@ -1,4 +1,5 @@
 #include "GFX.h"
+#include <cmath>
 
 SDL_Renderer* GFX::renderer = nullptr;
 
@@ -90,7 +91,7 @@ void GFX::DrawTexture(Texture* texture, int x, int y, int clipX, int clipY, int 
 void GFX::FillCircle(unsigned int color, int centerX, int centerY, int radius, int segments)
 {
     //GFX::SetColor(color);
-    Uint8 red =      (color >> 24)   & 0xFF;
+    /*Uint8 red =      (color >> 24)   & 0xFF;
 	Uint8 green =    (color >> 16)   & 0xFF;
 	Uint8 blue =     (color >> 8)    & 0xFF;
 	Uint8 alpha =    (color)         & 0xFF;
@@ -116,7 +117,7 @@ void GFX::FillCircle(unsigned int color, int centerX, int centerY, int radius, i
         indices[i * 3 + 2] = i + 2;
     }
 
-    SDL_RenderGeometry(GFX::renderer, nullptr, vertices.data(), vertices.size(), indices.data(), indices.size());
+    SDL_RenderGeometry(GFX::renderer, nullptr, vertices.data(), vertices.size(), indices.data(), indices.size());*/
 }
 
 void GFX::DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments) 
@@ -139,4 +140,42 @@ void GFX::DrawCircle(unsigned int color, int centerX, int centerY, int radius, i
     }
 }
 
+void GFX::DrawString(const char* str, Font* font, unsigned int color, int x, int y)
+{
+    //SDL_Surface* textSurface;
+    //SDL_Texture* textTexture;
+    
+    unsigned int red =      (color >> 24)   & 0xFF;
+	unsigned int green =    (color >> 16)   & 0xFF;
+	unsigned int blue =     (color >> 8)    & 0xFF;
+	unsigned int alpha =    (color)         & 0xFF;
+	
+	if(!font->IsLoaded())
+        return;
+    
+    SDL_Color textColor = {red, green, blue, alpha}; 
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font->GetInternalFont(), str, textColor);
+    
+    if (!textSurface) 
+    {
+        std::cerr << "Can't create surface for text: " << TTF_GetError() << std::endl;
+        return;
+    }
+    
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(GFX::renderer, textSurface);
+    SDL_FreeSurface(textSurface);
+    
+    
+    
+    int textWidth, textHeight;
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
+
+    // Posicionar el texto en el centro
+    SDL_Rect textRect = {x, y, textWidth, textHeight};
+    
+    SDL_RenderCopy(GFX::renderer, textTexture, nullptr, &textRect);
+    
+    //SDL_DestroyTexture(textTexture);
+    
+}
 

@@ -1,4 +1,6 @@
 #include "VampEngine.h"
+#include "XTimer.h"
+#include <thread>
 
 void VampEngine::Init()
 {
@@ -14,37 +16,47 @@ void VampEngine::Stop()
 
 void VampEngine::Run()
 {
-	int x = 0;
-	
-    while(running)
+    const int FPS = 60;
+    const int frameDelay = 1000 / FPS; // 1000ms / 30 FPS = 33.33ms por frame
+
+    long long lastTime = XTimer::GetMillis(); // Tiempo inicial
+
+    while (running)
     {
+        long long frameStart = XTimer::GetMillis(); // Comienza a medir el tiempo del frame
+
         window->PollEvents();
-        
-        if(window->CloseNeeded())
-        {
+
+        if (window->CloseNeeded())
             running = false;
-        }
-        
-        // Callback Event
+
+        // Calcula deltaTime en segundos
+        long long currentTime = XTimer::GetMillis();
+        float deltaTime = (currentTime - lastTime) / 1000.0f;
+        lastTime = currentTime;
+
+        //cout << "d: " << deltaTime << endl;
+
+        // Llama a OnUpdate con deltaTime
         if (OnUpdate)
-            OnUpdate();
-        
+            OnUpdate(deltaTime);
+
         window->BeginRender();
-        
-        if(Keyboard::IsDown(Key::LEFT))
-            x--;
-        else if(Keyboard::IsDown(Key::RIGHT))
-            x++;
-        
-        GFX::FillRect(0xFF00FFFF, x, 20, 100, 100);
-        
+
         if (OnPaint)
             OnPaint();
-        
+
         window->SwapBuffer();
-        
+
+        // Frame Lock: Asegura que cada frame dure al menos `frameDelay` milisegundos
+        long long frameTime = XTimer::GetMillis() - frameStart;
+
+        if (frameTime < frameDelay)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(frameDelay - frameTime));
+        }
     }
-    
+
     window->Destroy();
 }
 

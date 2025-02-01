@@ -30,10 +30,16 @@ void VampWindow::Init()
     int imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(imgFlags) & imgFlags))
     {
-        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        printf("SDL_image could not initialized! SDL_image Error: %s\n", IMG_GetError());
         SDL_Quit();
     }
     
+    // Initializes True type fonts
+    if (TTF_Init() == -1) 
+    {
+        cout << "TTF_Init could not be initialized! TTF_Init Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+    }
     
 
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
