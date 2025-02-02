@@ -9,13 +9,19 @@
 class Collider
 {
     public:
-        Collider(int width, int height);
-        bool Collides(Tilemap* tilemap, int tileId);
-        bool Collides(Sprite* sprite);
         int x;
         int y;
         int width;
         int height;
+        int offsetX = 0;
+        int offsetY = 0;
+        bool debug = false;
+        Collider(int width, int height);
+        bool Collides(Tilemap* tilemap, int tileId);
+        bool Collides(Sprite* sprite);
+        int GetX();
+        int GetY();
+        void SetOffset(int offsetX, int offsetY);
         void Paint();
         
 };

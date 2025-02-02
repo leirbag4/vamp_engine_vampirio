@@ -2,7 +2,7 @@
 
 Font::Font(const char* fontPath, int fontSize)
 {
-    _font = TTF_OpenFont(fontPath, 28);
+    _font = TTF_OpenFont(fontPath, fontSize);
     if (!_font) 
     {
         cout << "Can't load font at: " << fontPath << TTF_GetError() << endl;

@@ -3,12 +3,16 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 #include "Animation.h"
 #include "Animator.h"
 #include "Object2D.h"
 #include "Scene.h"
+//#include "Collider.h"
 
 using namespace std;
+
+class Collider;
 
 class Sprite : public Object2D
 {
@@ -20,12 +24,13 @@ class Sprite : public Object2D
         int height = 1;
         float scaleX = 1.0;
         float scaleY = 1.0;
+        SpriteSheet* spritesheet = nullptr;
+        Animator* animator = nullptr;
+        vector<Collider*> colliders;
         Sprite();
         void SetPos(int x, int y);
         int GetFullWidth();
         int GetFullHeight();
-        SpriteSheet* spritesheet = nullptr;
-        Animator* animator = nullptr;
         void Play(string animName, bool restart = false);
         void Play();
         void Pause();
@@ -39,6 +44,8 @@ class Sprite : public Object2D
         void SetSpriteSheet(SpriteSheet* spritesheet);
         SpriteSheet* GetSpriteSheet();
         int GetIndex() override;
+        void AttachCollider(Collider* collider);
+        void DettachCollider(Collider* collider);
         void Update() override;
         void Paint() override;
         

@@ -16,6 +16,7 @@
 #include "Vamp/Tilemap.h"
 #include "Vamp/Collider.h"
 #include "Vamp/Font.h"
+#include "Vamp/Button.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -42,10 +43,13 @@ Collider* colliderLeft;
 Collider* colliderRight;
 Collider* colliderUp;
 Collider* colliderDown;
+Collider* colliderUpLeft;
+Collider* colliderUpRight;
 SDL_Surface* textSurface;
 SDL_Texture* textTexture;
 TTF_Font* font;
 Font* font2;
+Button* button;
 
 int main(int argc, char* argv[])
 {
@@ -77,6 +81,11 @@ bool allowLeft = true;
 bool allowRight = true;
 bool allowUp = true;
 bool allowDown = true;
+
+void OnButtonPressed()
+{
+    cout << "pressed" << endl;
+}
 
 void OnInit()
 {
@@ -116,6 +125,7 @@ void OnInit()
     tilemap->FillRect(32, 6, 10, 6, 5);
     tilemap->FillRect(34, 8, 9, 5, 2);
     tilemap->SetTile(34, 5, 5);
+    //tilemap->offsetX = 100;
     engine->AddChild(tilemap);
     
     sprite = new Sprite();
@@ -134,6 +144,15 @@ void OnInit()
     colliderUp =    new Collider(10, 10);
     colliderDown =  new Collider(10, 10);
     
+    colliderUpLeft = new Collider(8, 8);
+    colliderUpRight = new Collider(8, 8);
+    colliderUpLeft->debug = true;
+    colliderUpRight->debug = true;
+    colliderUpLeft->SetOffset(-5, -5);
+    colliderUpRight->SetOffset(19, -5);
+    sprite->AttachCollider(colliderUpLeft);
+    sprite->AttachCollider(colliderUpRight);
+    
     font2 = new Font("res/cascadia_code.ttf", 28);
     
     sprite3 = new Sprite();
@@ -144,6 +163,13 @@ void OnInit()
     sprite3->SetPos(300, 130);
     sprite3->Play();
     engine->AddChild(sprite3);
+    
+    button = new Button("res/cascadia_code.ttf", 12);
+    button->SetText("tester");
+    button->SetPos(40, 200);
+    button->SetSize(100, 30);
+    button->OnPressed = OnButtonPressed;
+    engine->AddChild(button);
 }
 
 void OnUpdate(float deltaTime)
@@ -254,18 +280,21 @@ void OnUpdate(float deltaTime)
     
     //cout << "col " << collider->CollidesTile(tilemap, 34) << endl;
     
-    cout << "id: " << tile.id << ", x: " << tile.x << ", y: " << tile.y << endl;
+    //cout << "id: " << tile.id << ", x: " << tile.x << ", y: " << tile.y << endl;
     
     if(colliderLeft->Collides(sprite2))
     {
         cout << "collides" << endl;
         cout << "indexA: " << sprite->GetIndex() << ", indexB: " << sprite2->GetIndex() << endl;
-        engine->GetScene()->SetIndex(sprite, sprite2->GetIndex());
+        //engine->GetScene()->SetIndex(sprite, sprite2->GetIndex());
+        engine->RemoveChild(sprite2);
     }
     //sprite3->Update();
     //auto now = high_resolution_clock::now();
     //long long time = duration_cast<nanoseconds>(now.time_since_epoch()).count();
     //cout << time << endl;
+    
+    cout << "d: " << button->IsDown() << endl;
 }
 
 void OnPaint()

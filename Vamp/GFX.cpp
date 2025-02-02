@@ -154,7 +154,7 @@ void GFX::DrawString(const char* str, Font* font, unsigned int color, int x, int
         return;
     
     SDL_Color textColor = {red, green, blue, alpha}; 
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font->GetInternalFont(), str, textColor);
+    SDL_Surface* textSurface = TTF_RenderText_Blended(font->GetInternalFont(), str, textColor);
     
     if (!textSurface) 
     {
@@ -170,7 +170,6 @@ void GFX::DrawString(const char* str, Font* font, unsigned int color, int x, int
     int textWidth, textHeight;
     SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
 
-    // Posicionar el texto en el centro
     SDL_Rect textRect = {x, y, textWidth, textHeight};
     
     SDL_RenderCopy(GFX::renderer, textTexture, nullptr, &textRect);
@@ -179,3 +178,30 @@ void GFX::DrawString(const char* str, Font* font, unsigned int color, int x, int
     
 }
 
+Size GFX::GetFontSize(const char* str, Font* font)
+{
+    Size size = {0, 0}; 
+    
+    if(!font->IsLoaded())
+        return size;
+    
+    SDL_Color textColor = {255, 255, 255, 255}; 
+    SDL_Surface* textSurface = TTF_RenderText_Blended(font->GetInternalFont(), str, textColor);
+    
+    if (!textSurface) 
+    {
+        std::cerr << "Can't create surface for text: " << TTF_GetError() << std::endl;
+        return size;
+    }
+    
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(GFX::renderer, textSurface);
+    SDL_FreeSurface(textSurface);
+    
+    int textWidth, textHeight;
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
+    
+    size.width =    textWidth;
+    size.height =   textHeight;
+    
+    return size;
+}

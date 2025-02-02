@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+#include "Collider.h"
+
 // Constructor
 Sprite::Sprite()
 {
@@ -136,6 +138,17 @@ int Sprite::GetIndex()
     return parentScene->GetIndex(this);
 }
 
+void Sprite::AttachCollider(Collider* collider)
+{
+	if(collider)
+        colliders.push_back(collider);
+}
+
+void Sprite::DettachCollider(Collider* collider) 
+{
+    colliders.erase(std::remove(colliders.begin(), colliders.end(), collider), colliders.end());
+}
+
 void Sprite::Update()
 {
 	Texture* tex;
@@ -157,6 +170,13 @@ void Sprite::Update()
         animator->GetAnim()->Update();
         currFrame = animator->GetAnim()->GetFrame();
     }
+    
+    for (auto collider : colliders) 
+    {
+        collider->x = x;
+        collider->y = y;
+    }
+    
 }
 
 void Sprite::Paint()
@@ -174,6 +194,12 @@ void Sprite::Paint()
     else if(spritesheet != nullptr)
     {
         spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
+    }
+    
+    for (auto collider : colliders) 
+    {
+    	if(collider->debug)
+            collider->Paint();
     }
 }
 

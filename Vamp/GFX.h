@@ -7,6 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include "Texture.h"
 #include "Font.h"
+#include "Geometry.h"
 
 // Forward declaration to solve circular dependency
 class Texture;
@@ -32,6 +33,7 @@ class GFX
         static void DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments);
         static void DrawCircle(unsigned int color, int centerX, int centerY, int radius, int segments, int size);
         static void DrawString(const char* str, Font* font, unsigned int color, int x, int y);
+        static Size GetFontSize(const char* str, Font* font);
 };
 
 
