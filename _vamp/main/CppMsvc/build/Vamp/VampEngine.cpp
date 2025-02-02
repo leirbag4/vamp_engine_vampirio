@@ -102,6 +102,8 @@ void VampEngine::SetIndex(Object2D* child, int newIndex)
 
 void VampEngine::Update(float deltaTime)
 {
+	XConsole::Clear();
+	
 	scene->Update();
 	
     if (OnUpdate)
@@ -116,6 +118,8 @@ void VampEngine::Paint()
     
     if (OnPaint)
         OnPaint();
+        
+    XConsole::Paint();
         
     window->SwapBuffer();
 }

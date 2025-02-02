@@ -17,6 +17,7 @@
 #include "Vamp/Collider.h"
 #include "Vamp/Font.h"
 #include "Vamp/Button.h"
+#include "Vamp/XConsole.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -170,6 +171,10 @@ void OnInit()
     button->SetSize(100, 30);
     button->OnPressed = OnButtonPressed;
     engine->AddChild(button);
+    
+    //XConsole::SetFont(font2);
+    XConsole::CreateFont("res/cascadia_code.ttf", 12);
+    XConsole::SetActive(true);
 }
 
 void OnUpdate(float deltaTime)
@@ -294,7 +299,10 @@ void OnUpdate(float deltaTime)
     //long long time = duration_cast<nanoseconds>(now.time_since_epoch()).count();
     //cout << time << endl;
     
-    cout << "d: " << button->IsDown() << endl;
+    XConsole::PrintError("start");
+    XConsole::PrintError("test 99");
+    XConsole::Println("end 123");
+    
 }
 
 void OnPaint()
@@ -323,6 +331,7 @@ void OnPaint()
     colliderRight->Paint();
     colliderUp->Paint();
     colliderDown->Paint();
+    
     
     
     

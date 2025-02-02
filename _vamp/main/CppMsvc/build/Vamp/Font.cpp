@@ -17,6 +17,11 @@ TTF_Font* Font::GetInternalFont()
     return _font;
 }
 
+int Font::GetFontHeight()
+{
+    return TTF_FontHeight(_font);
+}
+
 bool Font::IsLoaded()
 {
     return loaded;

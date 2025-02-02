@@ -7,6 +7,7 @@
 #include "Key.h"
 #include "Keyboard.h"
 #include "Scene.h"
+#include "XConsole.h"
 #include <functional>
 
 using namespace std;

@@ -13,6 +13,7 @@ class Font
     public:
         Font(const char* fontPath, int fontSize);
         TTF_Font* GetInternalFont();
+        int GetFontHeight();
         bool IsLoaded();
 
     private:
