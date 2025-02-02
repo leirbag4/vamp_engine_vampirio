@@ -6,6 +6,8 @@
 #include "Texture.h"
 #include "SpriteSheet.h"
 #include "GFX.h"
+#include "Object2D.h"
+#include "Scene.h"
 
 using namespace std;
 
@@ -18,7 +20,7 @@ struct Tile
     int height;
 };
         
-class Tilemap
+class Tilemap : public Object2D
 {
     public:
         
@@ -39,8 +41,9 @@ class Tilemap
         void SetTile(int tileId, int x, int y);
         int GetTileIdAt(int posX, int posY);
         Tile GetTileAt(int posX, int posY);
-        void Update();
-        void Paint();
+        int GetIndex() override;
+        void Update() override;
+        void Paint() override;
         
     private:
         Texture* texture;

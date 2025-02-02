@@ -19,6 +19,7 @@
 
 using namespace std;
 using namespace std::chrono;
+void OnInit();
 void OnUpdate(float deltaTime);
 void OnPaint();
 
@@ -35,6 +36,7 @@ Animation* animUp;
 Animator* animator;
 Sprite* sprite;
 Sprite* sprite2;
+Sprite* sprite3;
 Tilemap* tilemap;
 Collider* colliderLeft;
 Collider* colliderRight;
@@ -55,18 +57,29 @@ int main(int argc, char* argv[])
 	
 	
     engine = new VampEngine();
+    engine->OnInit =    OnInit;
     engine->OnUpdate =  OnUpdate;
     engine->OnPaint =   OnPaint;
+    
     engine->Init();
+    engine->Run();
     
-    /*texture = IMG_LoadTexture(GFX::renderer, "res/player_sprite.png");
-    if (!texture) {
-        std::cerr << "Error al cargar la imagen PNG: " << IMG_GetError() << std::endl;
-        IMG_Quit();
-        SDL_Quit();
-        return -1;
-    }*/
-    
+    cout << "start" << endl;
+    return 0;
+}
+
+int x = 0;
+int y = 0;
+int state = 0;
+int counter = 0;
+Tile tile;
+bool allowLeft = true;
+bool allowRight = true;
+bool allowUp = true;
+bool allowDown = true;
+
+void OnInit()
+{
     texture2 = new Texture("res/player_sprite.png");
     spritesheet = new SpriteSheet(texture2, 19, 25);
     animation = new Animation();
@@ -97,49 +110,41 @@ int main(int argc, char* argv[])
     
     //animator->Play("walk_left");
     
-    sprite = new Sprite();
-    sprite->SetSpriteSheet(spritesheet);
-    sprite->SetAnimator(animator);
-    
-    sprite2 = new Sprite();
-    sprite2->SetSpriteSheet(spritesheet);
-    sprite2->SetPos(140, 140);
-    sprite2->SetFrame(3);
-    
     tilemap = new Tilemap("res/tileset.png", 24, 200, 200, 10, 10);
     tilemap->FillRect(17, 0, 0, 200, 200);
     tilemap->FillRect(16, 4, 4, 8, 8);
     tilemap->FillRect(32, 6, 10, 6, 5);
     tilemap->FillRect(34, 8, 9, 5, 2);
     tilemap->SetTile(34, 5, 5);
+    engine->AddChild(tilemap);
+    
+    sprite = new Sprite();
+    sprite->SetSpriteSheet(spritesheet);
+    sprite->SetAnimator(animator);
+    engine->AddChild(sprite);
+    
+    sprite2 = new Sprite();
+    sprite2->SetSpriteSheet(spritesheet);
+    sprite2->SetPos(140, 140);
+    sprite2->SetFrame(3);
+    engine->AddChild(sprite2);
     
     colliderLeft =  new Collider(10, 10);
     colliderRight = new Collider(10, 10);
     colliderUp =    new Collider(10, 10);
     colliderDown =  new Collider(10, 10);
-   
-    
     
     font2 = new Font("res/cascadia_code.ttf", 28);
     
-    
-    
-    
-    engine->Run();
-    
-    cout << "start" << endl;
-    return 0;
+    sprite3 = new Sprite();
+    sprite3->AddFrame("res/player_01.png");
+    sprite3->AddFrame("res/player_02.png");
+    sprite3->AddFrame("res/player_03.png");
+    sprite3->AddFrame("res/player_04.png");
+    sprite3->SetPos(300, 130);
+    sprite3->Play();
+    engine->AddChild(sprite3);
 }
-
-int x = 0;
-int y = 0;
-int state = 0;
-int counter = 0;
-Tile tile;
-bool allowLeft = true;
-bool allowRight = true;
-bool allowUp = true;
-bool allowDown = true;
 
 void OnUpdate(float deltaTime)
 {
@@ -217,9 +222,9 @@ void OnUpdate(float deltaTime)
         //cout << "anim: " << animation->GetFrame() << endl;
     }
     
-    tilemap->Update();
-    sprite->Update();
-    sprite2->Update();
+    //tilemap->Update();
+    //sprite->Update();
+    //sprite2->Update();
     
     // Colliders
     colliderLeft->x = sprite->x - 6;
@@ -252,9 +257,12 @@ void OnUpdate(float deltaTime)
     cout << "id: " << tile.id << ", x: " << tile.x << ", y: " << tile.y << endl;
     
     if(colliderLeft->Collides(sprite2))
+    {
         cout << "collides" << endl;
-    
-    
+        cout << "indexA: " << sprite->GetIndex() << ", indexB: " << sprite2->GetIndex() << endl;
+        engine->GetScene()->SetIndex(sprite, sprite2->GetIndex());
+    }
+    //sprite3->Update();
     //auto now = high_resolution_clock::now();
     //long long time = duration_cast<nanoseconds>(now.time_since_epoch()).count();
     //cout << time << endl;
@@ -268,9 +276,9 @@ void OnPaint()
     //SDL_Rect destRect = {100, 100, 64, 64}; // x, y, width, height
     //SDL_RenderCopy(GFX::renderer, texture, &srcRect, &destRect);
 
-    tilemap->Paint();
+    //tilemap->Paint();
             
-    GFX::DrawTexture(texture2, x, y, 0, 0, 19, 25);
+    //GFX::DrawTexture(texture2, x, y, 0, 0, 19, 25);
     
     //cout << counter << endl;
     spritesheet->Paint(counter, 1, 0, 100, 70);
@@ -279,8 +287,8 @@ void OnPaint()
 
     GFX::DrawRect(0x00FFFFFF, tile.x, tile.y, tile.width, tile.height);
 
-    sprite->Paint();
-    sprite2->Paint();
+    //sprite->Paint();
+    //sprite2->Paint();
     
     colliderLeft->Paint();
     colliderRight->Paint();
@@ -298,4 +306,5 @@ void OnPaint()
     GFX::DrawString("something", font2, 0xFF0000FF, 60, 100);
 
 
+    //sprite3->Paint();
 }

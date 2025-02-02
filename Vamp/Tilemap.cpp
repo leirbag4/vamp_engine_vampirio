@@ -51,7 +51,8 @@ int Tilemap::GetTileIdAt(int posX, int posY)
     return -1; // Devuelve -1 si está fuera de los límites
 }
 
-Tile Tilemap::GetTileAt(int posX, int posY) {
+Tile Tilemap::GetTileAt(int posX, int posY) 
+{
     Tile tile;
     
     // Adjust the coordinates using the offsets and local coordinates
@@ -84,6 +85,10 @@ Tile Tilemap::GetTileAt(int posX, int posY) {
     return tile;
 }
 
+int Tilemap::GetIndex()
+{
+    return parentScene->GetIndex(this);
+}
 
 void Tilemap::Update()
 {
