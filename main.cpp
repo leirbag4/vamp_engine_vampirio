@@ -3,21 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <unordered_map>
-#include "Vamp/VampEngine.h"
-#include "Vamp/Key.h"
-#include "Vamp/Keyboard.h"
-#include "Vamp/GFX.h"
-#include "Vamp/Texture.h"
-#include "Vamp/XTimer.h"
-#include "Vamp/SpriteSheet.h"
-#include "Vamp/Animation.h"
-#include "Vamp/Sprite.h"
-#include "Vamp/Animator.h"
-#include "Vamp/Tilemap.h"
-#include "Vamp/Collider.h"
-#include "Vamp/Font.h"
-#include "Vamp/Button.h"
-#include "Vamp/XConsole.h"
+#include "Vamp/Vamp.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -331,11 +317,6 @@ void OnPaint()
     colliderRight->Paint();
     colliderUp->Paint();
     colliderDown->Paint();
-    
-    
-    
-    
-    
     
     
     //GFX::FillCircle(0xFF00FFFF, 100, 100, 100, 36);
