@@ -149,6 +149,24 @@ void Sprite::DettachCollider(Collider* collider)
     colliders.erase(std::remove(colliders.begin(), colliders.end(), collider), colliders.end());
 }
 
+void Sprite::UpdateColliders(int x, int y)
+{
+    for (auto collider : colliders) 
+    {
+        collider->x = x;
+        collider->y = y;
+    }
+}
+
+void Sprite::DebugColliders()
+{
+    for (auto collider : colliders) 
+    {
+    	if(collider->debug)
+            collider->Paint();
+    }
+}
+
 void Sprite::Update()
 {
 	Texture* tex;
@@ -160,22 +178,18 @@ void Sprite::Update()
         width =  tex->width;
     	height = tex->height;
         animImgs->Update();
-        //cout << "anim " << animImgs->GetFrame() << endl;
-        return;
 	}
-	
-    if(animator != nullptr)
-    {
-        animator->Update();
-        animator->GetAnim()->Update();
-        currFrame = animator->GetAnim()->GetFrame();
+	else
+	{
+        if(animator != nullptr)
+        {
+            animator->Update();
+            animator->GetAnim()->Update();
+            currFrame = animator->GetAnim()->GetFrame();
+        }
     }
     
-    for (auto collider : colliders) 
-    {
-        collider->x = x;
-        collider->y = y;
-    }
+    UpdateColliders(x, y);
     
 }
 
@@ -184,23 +198,20 @@ void Sprite::Paint()
 	if(simpleMode)
 	{
         GFX::DrawTexture(frameImgs[animImgs->GetFrame()], x, y, width * scaleX, height * scaleY);
-        return;
 	}
-	
-    if((animator != nullptr) && (spritesheet != nullptr))
-    {
-        spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
-    }
-    else if(spritesheet != nullptr)
-    {
-        spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
+	else
+	{
+        if((animator != nullptr) && (spritesheet != nullptr))
+        {
+            spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
+        }
+        else if(spritesheet != nullptr)
+        {
+            spritesheet->Paint(currFrame, x, y, width * scaleX, height * scaleY);
+        }
     }
     
-    for (auto collider : colliders) 
-    {
-    	if(collider->debug)
-            collider->Paint();
-    }
+    DebugColliders();
 }
 
 

@@ -32,6 +32,7 @@ Collider* colliderUp;
 Collider* colliderDown;
 Collider* colliderUpLeft;
 Collider* colliderUpRight;
+Collider* collider;
 SDL_Surface* textSurface;
 SDL_Texture* textTexture;
 TTF_Font* font;
@@ -120,11 +121,17 @@ void OnInit()
     sprite->SetAnimator(animator);
     engine->AddChild(sprite);
     
+    collider = new Collider(10, 10);
+    collider->SetOffset(-5, -5);
+    collider->debug = true;
+    
     sprite2 = new Sprite();
     sprite2->SetSpriteSheet(spritesheet);
     sprite2->SetPos(140, 140);
     sprite2->SetFrame(3);
     engine->AddChild(sprite2);
+    
+    
     
     colliderLeft =  new Collider(10, 10);
     colliderRight = new Collider(10, 10);
@@ -150,6 +157,8 @@ void OnInit()
     sprite3->SetPos(300, 130);
     sprite3->Play();
     engine->AddChild(sprite3);
+    
+    sprite3->AttachCollider(collider);
     
     button = new Button("res/cascadia_code.ttf", 12);
     button->SetText("tester");

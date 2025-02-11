@@ -54,6 +54,8 @@ class Sprite : public Object2D
         bool simpleMode = false;
         vector<Texture*> frameImgs;
         Animation* animImgs;
+        void UpdateColliders(int x, int y);
+        void DebugColliders();
 };
 
 #endif
