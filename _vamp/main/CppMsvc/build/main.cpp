@@ -78,7 +78,7 @@ void OnButtonPressed()
 void OnInit()
 {
     texture2 = new Texture("res/player_sprite.png");
-    spritesheet = new SpriteSheet(texture2, 19, 25);
+    spritesheet = new SpriteSheet("res/player_sprite.png", 19, 25);
     animation = new Animation();
     animation->AddFrame(0);
     animation->AddFrame(1);

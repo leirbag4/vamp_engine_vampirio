@@ -8,6 +8,7 @@ class SpriteSheet
 {
     public:
         SpriteSheet(Texture* texture, int tileWidth, int tileHeight);
+        SpriteSheet(const char* imgPath, int tileWidth, int tileHeight);
         int GetTileWidth();
         int GetTileHeight();
         void Paint(int tileId, int x, int y);

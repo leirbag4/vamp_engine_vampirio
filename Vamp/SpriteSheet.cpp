@@ -13,6 +13,12 @@ SpriteSheet::SpriteSheet(Texture* texture, int tileWidth, int tileHeight)
     this->totalTilesY = height / tileHeight;
 }
 
+SpriteSheet::SpriteSheet(const char* imgPath, int tileWidth, int tileHeight)
+: SpriteSheet(new Texture(imgPath), tileWidth, tileHeight)
+{
+
+}
+
 int SpriteSheet::GetTileWidth()
 {
     return tileWidth;
