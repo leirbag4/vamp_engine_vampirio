@@ -81,10 +81,11 @@ void OnInit()
     spritesheet = new SpriteSheet("res/player_sprite.png", 19, 25);
     // or -> spritesheet = new SpriteSheet(texture2, 19, 25);
     animation = new Animation();
-    animation->AddFrame(0);
-    animation->AddFrame(1);
-    animation->AddFrame(2);
-    animation->AddFrame(3);
+    //animation->AddFrame(0);
+    //animation->AddFrame(1);
+    //animation->AddFrame(2);
+    //animation->AddFrame(3);
+    animation->AddFrames({0, 1, 2, 3});
     animation->Play();
     
     timer = new XTimer(1000);
@@ -95,8 +96,8 @@ void OnInit()
     animLeft = new Animation();
     animUp = new Animation();
         
-    animDown->AddFrame(0);  animDown->AddFrame(1);  animDown->AddFrame(2);
-    animRight->AddFrame(3); animRight->AddFrame(4); animRight->AddFrame(5);
+    animDown->AddFrames({0, 1, 2}); //animDown->AddFrame(0);  animDown->AddFrame(1);  animDown->AddFrame(2);
+    animRight->AddFrames({3, 4, 5});//animRight->AddFrame(3); animRight->AddFrame(4); animRight->AddFrame(5);
     animLeft->AddFrame(6);  animLeft->AddFrame(7);  animLeft->AddFrame(8);
     animUp->AddFrame(9);    animUp->AddFrame(10);   animUp->AddFrame(11);
     

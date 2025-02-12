@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <initializer_list>
 #include "SpriteSheet.h"
 #include "XTimer.h"
 
@@ -13,6 +14,7 @@ class Animation
     public:
         Animation();
         void AddFrame(int tileId);
+        void AddFrames(initializer_list<int> frames);
         void SetFrame(int frameNumber);
         void SetSpeed(float speed);
         void Play();

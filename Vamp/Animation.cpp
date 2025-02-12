@@ -15,6 +15,12 @@ void Animation::AddFrame(int tileId)
     totalFrames = frames.size();   
 }
 
+void Animation::AddFrames(initializer_list<int> frames)
+{
+    for (int frame : frames)
+        AddFrame(frame);
+}
+
 
 void Animation::SetFrame(int frameNumber)
 {
