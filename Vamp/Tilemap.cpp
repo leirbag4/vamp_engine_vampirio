@@ -113,7 +113,8 @@ void Tilemap::Paint()
     //    col--;
     
     //cout << "localY: " << localY << " col: " << col << endl;
-    GFX::FillRect(0xFF00FFFF, offsetX, offsetY, tileSize * viewportWidth, tileSize * viewportHeight);
+    if(debug)
+        GFX::FillRect(0xFF00FFFF, offsetX, offsetY, tileSize * viewportWidth, tileSize * viewportHeight);
     
     for(int cy = col; cy < (viewportHeight + col + 1); cy++)
     {

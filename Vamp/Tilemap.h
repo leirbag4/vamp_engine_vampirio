@@ -36,6 +36,7 @@ class Tilemap : public Object2D
         int height; 
         int viewportWidth; 
         int viewportHeight;
+        bool debug = false;
         Tilemap(const char* path, int tileSize, int width, int height, int viewportWidth, int viewportHeight);
         void FillRect(int tileId, int x, int y, int width, int height);
         void SetTile(int tileId, int x, int y);
